@@ -1,0 +1,39 @@
+apply plugin: 'com.android.library'
+apply plugin: 'com.novoda.bintray-release'
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion buildTools
+
+    defaultConfig {
+        minSdkVersion 15
+        targetSdkVersion 25
+        versionName releaseVersion
+
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    provided "com.jakewharton.timber:timber:$timber"
+    provided "net.hockeyapp.android:HockeySDK:$hockey"
+    testCompile "junit:junit:$junit"
+    testCompile "org.mockito:mockito-core:$mockito"
+}
+
+publish {
+    Properties properties = new Properties()
+    properties.load(project.rootProject.file('user.properties').newDataInputStream())
+
+    repoName = properties.getProperty('repo_name')
+    groupId = properties.getProperty('group_id')
+    artifactId = properties.getProperty('artifact_id')
+    bintrayUser = properties.getProperty('bintray_username')
+    bintrayKey = properties.getProperty('bintray_key')
+    publishVersion = releaseVersion
+}
