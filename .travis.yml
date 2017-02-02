@@ -26,7 +26,7 @@ cache:
 
 deploy:
     provider: script
-    script: deploy.sh
+    script: ./deploy.sh
     on:
         repo: keiththompson/hockey-tree
         all_branches: true
