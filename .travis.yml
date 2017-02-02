@@ -1,0 +1,33 @@
+language: android
+
+jdk:
+    - oraclejdk8
+
+android:
+    components:
+        - tools
+        - build-tools-25.0.0
+        - android-25
+
+before_install:
+    - source environmentSetup.sh && copyEnvVarsToUserProperties
+
+script:
+    - ./gradlew clean test
+
+notifications:
+    email: false
+
+sudo: false
+
+cache:
+    directories:
+        - $HOME/.gradle
+
+deploy:
+    provider: script
+    script: deploy.sh
+    on:
+        repo: keiththompson/hockey-tree
+        all_branches: true
+        tags: true
