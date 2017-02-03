@@ -16,7 +16,7 @@ allprojects {
 
 ext {
     buildTools = '25.0.0'
-    releaseVersion = '1.0.1'
+    releaseVersion = '1.1.0'
     hockey = '4.1.2'
     timber = '4.5.0'
     junit = '4.12'
