@@ -83,8 +83,8 @@ public class BreadcrumbsTest {
         breadcrumbs.add(new Breadcrumb(time, breadcrumb));
     }
 
-    private static final String SOUP_CRIMP = "1234: Soup, soup, a tasty, soup soup,1234: spicy " +
-        "carrot and coriander1234: [Chilli Chowder!]1234: CRUTON CRUTON!1234: Crunchy friends in a " +
-        "liquid broth!1234: I am gazpacho !1234: I am a summer soup oh!1234: Miso, Miso,1234: " +
-        "Fighting in the Dojo,1234: Oriental prince in the land of SOUP!";
+    private static final String SOUP_CRIMP = "1234: Soup, soup, a tasty, soup soup,\n1234: spicy " +
+        "carrot and coriander\n1234: [Chilli Chowder!]\n1234: CRUTON CRUTON!\n1234: Crunchy friends " +
+        "in a liquid broth!\n1234: I am gazpacho !\n1234: I am a summer soup oh!\n1234: Miso, " +
+        "Miso,\n1234: Fighting in the Dojo,\n1234: Oriental prince in the land of SOUP!\n";
 }

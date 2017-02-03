@@ -45,7 +45,8 @@ public class Breadcrumbs {
     @Override public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
         for (Breadcrumb breadcrumb : store) {
-            stringBuilder.append(breadcrumb.toString());
+            stringBuilder.append(breadcrumb.toString())
+                .append("\n");
         }
         return stringBuilder.toString();
     }
