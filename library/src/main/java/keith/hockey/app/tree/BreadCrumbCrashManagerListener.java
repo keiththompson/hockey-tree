@@ -6,11 +6,7 @@ public class BreadCrumbCrashManagerListener extends CrashManagerListener {
 
     private final Breadcrumbs breadcrumbs;
 
-    public BreadCrumbCrashManagerListener() {
-        this(new Breadcrumbs());
-    }
-
-    BreadCrumbCrashManagerListener(Breadcrumbs breadcrumbs) {
+    public BreadCrumbCrashManagerListener(Breadcrumbs breadcrumbs) {
         this.breadcrumbs = breadcrumbs;
     }
 
