@@ -2,7 +2,7 @@ package keith.hockey.app.tree;
 
 import java.util.Date;
 
-class Breadcrumb {
+public final class Breadcrumb {
 
     private final String timestamp;
     private final String message;
