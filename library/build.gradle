@@ -2,34 +2,34 @@ apply plugin: 'com.android.library'
 apply plugin: 'com.novoda.bintray-release'
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion buildTools
-
+    compileSdkVersion 28
     defaultConfig {
         minSdkVersion 15
-        targetSdkVersion 25
+        targetSdkVersion 28
         versionName releaseVersion
 
     }
     buildTypes {
         release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            useProguard false
         }
     }
 }
 
 dependencies {
-    provided "com.jakewharton.timber:timber:$timber"
-    provided "net.hockeyapp.android:HockeySDK:$hockey"
-    testCompile "junit:junit:$junit"
-    testCompile "org.mockito:mockito-core:$mockito"
+    compileOnly "com.jakewharton.timber:timber:$timber"
+    compileOnly "net.hockeyapp.android:HockeySDK:$hockey"
+    testImplementation "com.jakewharton.timber:timber:$timber"
+    testImplementation "net.hockeyapp.android:HockeySDK:$hockey"
+    testImplementation "junit:junit:$junit"
+    testImplementation "org.mockito:mockito-core:$mockito"
 }
 
 publish {
     Properties properties = new Properties()
     properties.load(project.rootProject.file('user.properties').newDataInputStream())
-
+    userOrg = 'keiththompson'
+    desc = 'Breadcrumbs for Hockeyapp via Timber'
     repoName = properties.getProperty('repo_name')
     groupId = properties.getProperty('group_id')
     artifactId = properties.getProperty('artifact_id')

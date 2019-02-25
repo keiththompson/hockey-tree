@@ -3,31 +3,28 @@ package keith.hockey.app.tree;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.Date;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.junit.Assert.*;
 
 public class BreadcrumbsTest {
 
     private final Queue<Breadcrumb> store = new ConcurrentLinkedQueue<>();
     private final int maxSize = 10;
-    private final int maxPayloadSize = 4096;
 
     private Breadcrumbs breadcrumbs;
 
     @Before public void setUp() throws Exception {
         store.clear();
-        breadcrumbs = new Breadcrumbs(store, maxSize, maxPayloadSize);
+        breadcrumbs = new Breadcrumbs(store, maxSize, 4096);
     }
 
     @Test public void ignoresMessagesExceedingMaxPayloadSize() {
-        Breadcrumb breadcrumb = mock(Breadcrumb.class);
-        when(breadcrumb.payloadSize()).thenReturn(maxPayloadSize + 1);
+        String message = "This is a test message";
+        breadcrumbs = new Breadcrumbs(store, maxSize, message.length() - 1);
+        Breadcrumb breadcrumb = new Breadcrumb(new Date(), message);
 
         breadcrumbs.add(breadcrumb);
 
