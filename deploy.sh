@@ -1,1 +1,1 @@
-./gradlew clean build bintrayUpload -PdryRun=false
+./gradlew bintrayUpload -PdryRun=false
