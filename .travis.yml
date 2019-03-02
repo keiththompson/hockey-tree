@@ -14,7 +14,7 @@ before_install:
     - source environmentSetup.sh && copyEnvVarsToUserProperties
 
 script:
-    - ./gradlew clean check
+    - ./gradlew clean build
 
 notifications:
     email: false
@@ -25,10 +25,8 @@ cache:
     directories:
         - $HOME/.gradle
 
-before_deploy:
-    - source environmentSetup.sh && copyEnvVarsToUserProperties
-
 deploy:
+    skip_cleanup: true
     provider: script
     script: ./deploy.sh
     on:
