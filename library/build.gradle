@@ -1,5 +1,6 @@
 apply plugin: 'com.android.library'
-apply plugin: 'com.novoda.bintray-release'
+apply plugin: 'maven-publish'
+apply plugin: 'com.jfrog.bintray'
 
 android {
     compileSdkVersion 28
@@ -25,15 +26,53 @@ dependencies {
     testImplementation "org.mockito:mockito-core:$mockito"
 }
 
-publish {
+bintray {
     Properties properties = new Properties()
     properties.load(project.rootProject.file('user.properties').newDataInputStream())
-    userOrg = 'keiththompson'
-    desc = 'Breadcrumbs for Hockeyapp via Timber'
-    repoName = properties.getProperty('repo_name')
-    groupId = properties.getProperty('group_id')
-    artifactId = properties.getProperty('artifact_id')
-    bintrayUser = properties.getProperty('bintray_username')
-    bintrayKey = properties.getProperty('bintray_key')
-    publishVersion = releaseVersion
+    user = properties.getProperty('bintray_username')
+    key = properties.getProperty('bintray_key')
+    publications = ['Production']
+    configurations = ['archives']
+    override = true
+    pkg {
+        repo = properties.getProperty('repo_name')
+        name = 'hockey-tree'
+        description = "Breadcrumbs for Hockeyapp via Timber"
+        publish = true
+        publicDownloadNumbers = true
+        licenses = ['MIT']
+        vcsUrl = 'https://github.com/keiththompson/hockey-tree.git'
+        dryRun = false
+        version {
+            name = releaseVersion
+            desc = "Breadcrumbs for Hockeyapp via Timber"
+            released = new Date()
+            vcsTag = releaseVersion
+        }
+    }
+}
+
+publishing {
+    publications {
+        Production(MavenPublication) {
+            artifact("$buildDir/outputs/aar/library.aar")
+            Properties properties = new Properties()
+            properties.load(project.rootProject.file('user.properties').newDataInputStream())
+            groupId properties.getProperty('group_id')
+            artifactId properties.getProperty('artifact_id')
+            version releaseVersion
+            pom.withXml {
+                def dependenciesNode = asNode().appendNode('dependencies')
+                configurations.implementation.allDependencies.each {
+                    // Ensure dependencies such as fileTree are not included in the pom.
+                    if (it.name != 'unspecified') {
+                        def dependencyNode = dependenciesNode.appendNode('dependency')
+                        dependencyNode.appendNode('groupId', it.group)
+                        dependencyNode.appendNode('artifactId', it.name)
+                        dependencyNode.appendNode('version', it.version)
+                    }
+                }
+            }
+        }
+    }
 }
